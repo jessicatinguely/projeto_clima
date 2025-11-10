@@ -4,13 +4,13 @@
 
 <div align="center">
 
-<img src="https://img.shields.io/github/languages/top/jessicatinguely/projeto_clima?style=flat-square" />
-<img src="https://img.shields.io/github/repo-size/jessicatinguely/projeto_clima?style=flat-square" />
-<img src="https://img.shields.io/github/languages/count/jessicatinguely/projeto_clima?style=flat-square" />
-<img src="https://img.shields.io/github/last-commit/jessicatinguely/projeto_clima?style=flat-square" />
-<img src="https://img.shields.io/github/issues/jessicatinguely/projeto_clima?style=flat-square" />
-<img src="https://img.shields.io/github/issues-pr/jessicatinguely/projeto_clima?style=flat-square" />
-<img src="https://img.shields.io/badge/status-em%20construção-yellow" alt="Status: Em Construção">
+<img src="https://img.shields.io/github/languages/top/jessicatinguely/projeto_clima?style=flat-square&cacheSeconds=60&v=1" />
+<img src="https://img.shields.io/github/languages/count/jessicatinguely/projeto_clima?style=flat-square&cacheSeconds=60&v=1" />
+<img src="https://img.shields.io/github/repo-size/jessicatinguely/projeto_clima?style=flat-square&cacheSeconds=60&v=1" />
+<img src="https://img.shields.io/github/last-commit/jessicatinguely/projeto_clima/main?style=flat-square&cacheSeconds=60&v=1" />
+<img src="https://img.shields.io/github/issues-raw/jessicatinguely/projeto_clima?style=flat-square&cacheSeconds=60&v=1" />
+<img src="https://img.shields.io/github/issues-pr-raw/jessicatinguely/projeto_clima?style=flat-square&cacheSeconds=60&v=1" />
+<img src="https://img.shields.io/badge/status-em%20constru%C3%A7%C3%A3o-yellow?style=flat-square" />
 
 </div>
 
