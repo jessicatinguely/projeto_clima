@@ -1,13 +1,7 @@
-# 🌦️ Projeto Clima — Aplicativo de Previsão do Tempo  
- 
+# 🌦️ Projeto Clima — Aplicativo de Previsão do Tempo
+
 <br />
- 
-<div align="center">
-<img src="https://i.imgur.com/F2ltcVl.png" title="source: imgur.com" alt="Banner do Projeto Clima" />  
-</div>
- 
-<br />
- 
+
 <div align="center">
 
 <img src="https://img.shields.io/github/languages/top/jessicatinguely/projeto_clima?style=flat-square" />
@@ -19,203 +13,115 @@
 <img src="https://img.shields.io/badge/status-em%20construção-yellow" alt="Status: Em Construção">
 
 </div>
- 
-<br />
-
----
-
-## ☀️ 1. Descrição
-
-O **Projeto Clima** é um aplicativo simples de **previsão do tempo**, desenvolvido com **HTML, CSS e JavaScript puro**.  
-Ele consome dados da **API Open-Meteo** para exibir a temperatura atual, descrição do clima e ícone correspondente.  
-
-A aplicação foi criada com fins **educacionais**, explorando **requisições com Fetch API**, **tratamento de erros**, **modo claro/escuro automático** e **testes automatizados com Jest**.
 
 <br />
 
----
+## 🧭 1. Descrição
 
-## 🌎 2. Funcionalidades
+O **Projeto Clima** é um aplicativo educacional de **previsão do tempo**, desenvolvido em **JavaScript puro**, que consome a API pública **Open-Meteo** para exibir informações meteorológicas em tempo real.
 
-1. Buscar o clima atual de qualquer cidade do mundo  
-2. Exibir **temperatura**, **descrição**, **ícone** e **nome do país**  
-3. Mudar o **tema da página automaticamente** (dia/noite)  
-4. Exibir mensagens de erro claras quando:
-   - A cidade não é encontrada  
-   - Ocorre erro de rede  
-   - A API retorna falha  
-
-<br />
+A aplicação foi criada com fins didáticos, integrando conceitos de:
+- Consumo de APIs REST
+- Manipulação do DOM
+- Tratamento de erros e validação
+- Testes automatizados com **Jest**
+- Boas práticas de documentação com **JSDoc**
 
 ---
 
-## 🧠 3. Estrutura do Projeto
+## ⚙️ 2. Funcionalidades Principais
 
+1. Busca de cidade e exibição de temperatura atual  
+2. Exibição de condições meteorológicas e ícones visuais (Weather Icons)  
+3. Alteração de tema (dia/noite) conforme o horário da consulta  
+4. Tratamento de erros (cidade inválida, falha de rede, etc.)  
+5. Testes automatizados de API e interface (Jest + jsdom)
+
+---
+
+## 🧪 3. Testes Automatizados
+
+Os testes foram desenvolvidos com o **Jest**, abrangendo:
+- Funções puras (`getCityCoordinates`, `getWeatherData`, `getWeatherIconClass`)  
+- Tratamento de exceções  
+- Simulação de rede (`fetch mock`)  
+- Interação com DOM via **jsdom**
+
+**Comando para executar:**
 ```bash
+npm test
+```
+
+**Cobertura atual:**
+```
+Statements   : 63%
+Branches     : 65%
+Functions    : 61%
+Lines        : 64%
+```
+
+---
+
+## 🧾 4. Estrutura do Projeto
+
+```
 projeto_clima/
 │
 ├── assets/
 │   ├── css/
-│   │   └── style.css        # Estilos principais
-│   └── js/
-│       └── api.js           # Lógica de requisição e exibição
+│   ├── js/
+│   │   └── api.js          # Funções principais e integração com DOM
 │
 ├── tests/
-│   └── api.test.js          # Testes Jest com mocks de fetch
+│   ├── api.test.js         # Testes de API e edge cases
+│   └── ui.test.js          # Testes de interface (jsdom)
 │
-├── index.html               # Interface principal
-├── README.md                # Documentação do projeto
-└── package.json             # Configurações e dependências
+├── package.json
+├── README.md
+└── index.html
 ```
 
-<br />
+---
+
+## 🧠 5. Tecnologias Utilizadas
+
+| Categoria | Tecnologia |
+|------------|-------------|
+| Linguagem | JavaScript (ES6+) |
+| Ambiente | Node.js |
+| Testes | Jest + jsdom |
+| API Pública | Open-Meteo |
+| Ícones | Weather Icons |
+| Documentação | JSDoc |
 
 ---
 
-## ⚙️ 4. Tecnologias Utilizadas
+## 🚀 6. Como Executar o Projeto
 
-| Item | Descrição |
-|------|------------|
-| **Frontend** | HTML, CSS, JavaScript |
-| **Bibliotecas de ícones** | [Weather Icons](https://erikflowers.github.io/weather-icons/) |
-| **Testes automatizados** | Jest |
-| **APIs** | [Open-Meteo Geocoding](https://open-meteo.com/en/docs/geocoding-api) e [Forecast](https://open-meteo.com/en/docs) |
-| **Controle de versão** | Git / GitHub |
+1. Clone o repositório:
+```bash
+git clone https://github.com/jessicatinguely/projeto_clima.git
+```
 
-<br />
-
----
-
-## 🧪 5. Testes Automatizados
-
-Os testes utilizam o **Jest** para simular as requisições da API (mocks de `fetch`), validando o comportamento das funções principais:
-
-### 📋 Testes Cobertos
-- Cidade válida retorna dados meteorológicos  
-- Cidade inexistente lança exceção  
-- Entrada vazia retorna erro de validação  
-- Falha de rede e erro 500 tratados corretamente  
-- Casos extremos: limite da API, conexão lenta, formato de JSON alterado  
-
-### ▶️ Executar os testes
+2. Instale as dependências:
 ```bash
 npm install
-npm test
 ```
 
-Para exibir a **cobertura de código**:
+3. Abra o arquivo `index.html` no navegador.
+
+4. Para executar os testes:
 ```bash
-# (adicione no package.json)
-"scripts": { "test": "jest --coverage" }
-
 npm test
 ```
 
-Depois, abra no navegador:
-```
-coverage/lcov-report/index.html
-```
+---
 
-<br />
+## ✨ 7. Status do Projeto
+🟡 **Em construção** — melhorias contínuas nas funções, testes e interface.
 
 ---
 
-## ☁️ 6. APIs Utilizadas
-
-### 🔹 Geocoding (busca da cidade)
-```
-https://geocoding-api.open-meteo.com/v1/search?name=<CIDADE>&count=1&language=pt&format=json
-```
-
-### 🔹 Forecast (clima atual)
-```
-https://api.open-meteo.com/v1/forecast?latitude=<LAT>&longitude=<LON>&current_weather=true&timezone=auto
-```
-
-Exemplo de resposta:
-```json
-{
-  "latitude": -23.55,
-  "longitude": -46.63,
-  "current_weather": {
-    "temperature": 25.3,
-    "weathercode": 1,
-    "is_day": 1
-  }
-}
-```
-
-<br />
-
----
-
-## 💡 7. Como Executar o Projeto Localmente
-
-### 🪄 Passos:
-1. **Clone o repositório:**
-   ```bash
-   git clone https://github.com/jessicatinguely/projeto_clima.git
-   cd projeto_clima
-   ```
-
-2. **Abra o arquivo `index.html`** diretamente no navegador  
-   ou use a extensão **Live Server** do VS Code.
-
-3. **Digite o nome de uma cidade** no campo de busca e veja o resultado.
-
-<br />
-
----
-
-## 📘 8. Documentação do Código
-
-O arquivo `api.js` utiliza **JSDoc** para descrever cada função, parâmetros e retornos.  
-Essas anotações permitem gerar documentação automática no futuro.
-
-Exemplo:
-
-```js
-/**
- * Busca coordenadas (latitude/longitude) de uma cidade
- * usando a API de Geocodificação Open-Meteo.
- *
- * @param {string} cityName - Nome da cidade (ex.: "São Paulo").
- * @returns {Promise<{name: string, latitude: number, longitude: number}>}
- * @throws {Error} Se a cidade não for encontrada.
- */
-async function getCityCoordinates(cityName) { ... }
-```
-
-<br />
-
----
-
-## 💻 9. Como Contribuir
-
-Contribuições são bem-vindas!  
-Se quiser sugerir melhorias ou reportar erros:
-
-- Abra uma **Issue**  
-- Faça um **Fork** e envie um **Pull Request**  
-- Compartilhe o projeto com colegas que também estão aprendendo programação!
-
-<br />
-
----
-
-## 👩‍💻 10. Autora
-
-Desenvolvido com ☕ e curiosidade por  
-**[Jessica Ghirardelli](https://github.com/jessicatinguely)**
-
-> Projeto desenvolvido como parte das atividades do programa **Generation Brasil (Java Full Stack)**.
-
-<br />
-
----
-
-## 🪪 Licença
-
-Este projeto está licenciado sob a licença **ISC** – Uso educacional e livre.
-
----
+## 💡 8. Desenvolvido por
+**Jessica Ghirardelli Tinguely**  
+📍 [GitHub](https://github.com/jessicatinguely)
