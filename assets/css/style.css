@@ -114,6 +114,12 @@ button[type="submit"]:active {
     border-radius: 15px;
     padding: 40px 80px;
     margin-bottom: 10px;
+
+    /* novos ajustes */
+    display: flex;                /* coloca ícone e número lado a lado */
+    align-items: center;          /* centraliza verticalmente */
+    justify-content: center;      /* centraliza horizontalmente */
+    gap: 24px;                    /* espaço entre ícone e temperatura */
 }
 
 .temperature {
@@ -135,20 +141,30 @@ button[type="submit"]:active {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    font-size: 1.5rem;
+    display: flex;                /* centraliza o SVG */
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     transition: all 0.3s;
     box-shadow: 0 5px 15px rgba(74, 144, 226, 0.2);
-}
-
-.icon-button:hover {
+  }
+  
+  .icon-button:hover {
     background: #3A7BC8;
     transform: scale(1.1);
-}
-
-.icon-button:active {
+  }
+  
+  .icon-button:active {
     transform: scale(0.95);
-}
+  }
+  
+  .icon-button svg {
+    width: 28px;
+    height: 28px;
+    stroke: white;               /* cor do contorno */
+    stroke-width: 2;
+    transition: transform 0.3s ease;
+  }
 
 /* Mensagem de Erro */
 .error-message {
@@ -209,4 +225,42 @@ button[type="submit"]:active {
     .temperature-box {
         padding: 25px 40px;
     }
-}
+} 
+/* Ícones do clima */
+
+#weather-icon {
+    color: #4A90E2;
+    font-size: 4.8rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  #weather-icon.wi::before {
+    font-size: 4.8rem !important;
+    line-height: 1;
+    display: inline-block;
+    transform: translateY(4px); /* ajuste fino — sobe ou desce o ícone */
+  }
+  
+  /* Fundo dia/noite */
+  body.theme-day {
+    background: linear-gradient(180deg, #87CEEB 0%, #B0E0E6 100%);
+  }
+  
+  body.theme-night {
+    background: linear-gradient(180deg, #0f1b33 0%, #1a2340 100%);
+  }
+  
+  /* Descrição e data */
+  .weather-description {
+    font-size: 1rem;
+    color: #2C3E50;
+    margin-top: -6px;
+  }
+  
+  .update-time {
+    font-size: 0.9rem;
+    color: #6b7c93;
+  }  }
