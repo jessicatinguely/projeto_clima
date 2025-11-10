@@ -12,7 +12,21 @@ const backButton = document.getElementById('back-button');
 const temperatureElement = document.getElementById('temperature');
 const cityNameElement = document.getElementById('city-name');
 
-// --- util: descrição do clima (sem libs) ---
+// (Opcional, mas recomendado) Função que centraliza o fetch + validação
+async function fetchJson(url, failMsg) {
+    const res = await fetch(url);
+    if (!res.ok) {
+      // se quiser, inclua o código HTTP na mensagem:
+      throw new Error(`${failMsg}`);
+    }
+    return res.json();
+  }
+  
+/**
+ * Traduz o código do tempo (Open-Meteo `weathercode`) em descrição legível.
+ * @param {number} code - Código do tempo (ex.: 0, 1, 2, 3, 61, 95).
+ * @returns {string} Descrição (ex.: "Céu limpo", "Nublado").
+ */
 function getWeatherDescription(code) {
     const map = {
         0: 'Céu limpo',
@@ -37,32 +51,65 @@ function getWeatherDescription(code) {
     return map[code] || 'Condição desconhecida';
 }
 
-// API: geocoding
- async function getCityCoordinates(cityName) {
+/** @fileoverview
+ * Funções do aplicativo de clima:
+ * - Geocodificação (Open-Meteo)
+ * - Clima atual (Open-Meteo)
+ * - Mapeamento de códigos de clima para descrição/ícone
+ * - Integração mínima com UI (tema dia/noite, ícone, descrição)
+ * Observação: funções puras são exportadas para testes com Jest.
+ */
+
+/**
+ * Busca coordenadas (latitude/longitude) para o nome de uma cidade
+ * usando a API de Geocodificação do Open-Meteo.
+ *
+ * @async
+ * @param {string} cityName - Nome da cidade (ex.: "São Paulo").
+ * @returns {Promise<{name: string, country: string, latitude: number, longitude: number}>}
+ * @throws {Error} Se a cidade não for encontrada ou a API falhar.
+ * @example
+ * const city = await getCityCoordinates('São Paulo');
+ * // { name: 'São Paulo', country: 'Brasil', latitude: -23.55, longitude: -46.63 }
+ */
+async function getCityCoordinates(cityName) {
     const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityName)}&count=1&language=pt&format=json`;
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('Falha ao buscar coordenadas.');
-    const data = await res.json();
+    const data = await fetchJson(url, 'Falha ao buscar coordenadas.');
     if (!data.results || data.results.length === 0) throw new Error('Cidade não encontrada');
     return data.results[0];
-}
-
-// API: tempo atual
-async function getWeatherData(latitude, longitude) {
-    const url =
-        `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&timezone=auto`;
-
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('Falha ao buscar meteorologia.');
-    const data = await res.json();
-
-    if (!data.current_weather)
-        throw new Error('Dados meteorológicos indisponíveis');
-
-    return data; // { current_weather: { temperature, weathercode, is_day, time, ... } }
-}
-
-// Exibe resultado
+  }
+  
+  /**
+ * Obtém dados meteorológicos atuais para coordenadas informadas.
+ *
+ * @async
+ * @param {number} latitude - Latitude em graus (−90 a 90).
+ * @param {number} longitude - Longitude em graus (−180 a 180).
+ * @returns {Promise<{ current_weather: {
+ *   temperature: number,
+  *   weathercode: number,
+  *   is_day: 0|1,
+  *   windspeed?: number,
+  *   winddirection?: number,
+  *   time: string
+  * } }>}
+  * @throws {Error} Se a API falhar ou `current_weather` estiver ausente.
+  * @example
+  * const w = await getWeatherData(-23.55, -46.63);
+  * console.log(w.current_weather.temperature);
+  */
+  async function getWeatherData(latitude, longitude) {
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&timezone=auto`;
+    const data = await fetchJson(url, 'Falha ao buscar meteorologia.');
+    if (!data.current_weather) throw new Error('Dados meteorológicos indisponíveis');
+    return data;
+  }
+/**
+ * Mostra na tela temperatura, cidade, descrição e aplica tema.
+ * @param {{name: string, country: string}} cityData - Dados da cidade.
+ * @param {{ current_weather: { temperature: number, weathercode: number, is_day: 0|1, time: string } }} weatherData
+ * @returns {void}
+ */
 function showResult(cityData, weatherData) {
     const { name, country } = cityData;
     const { current_weather } = weatherData;
@@ -106,7 +153,7 @@ function showResult(cityData, weatherData) {
     resultSection.classList.remove('hidden');
 }
 
-// Exibe tela de erro
+/** Mostra tela de erro e volta tema para "dia". */
 function showError() {
     homeSection.classList.add('hidden');
     resultSection.classList.add('hidden');
@@ -116,7 +163,7 @@ function showError() {
     document.body.classList.add('theme-day');
 }
 
-// Voltar ao início
+/** Volta para a tela inicial e limpa os campos. */
 function showHome() {
     resultSection.classList.add('hidden');
     errorSection.classList.add('hidden');
@@ -128,7 +175,12 @@ function showHome() {
     document.body.classList.add('theme-day');
 }
 
-// Busca principal
+/**
+ * Fluxo principal: resolve cidade → busca clima → exibe.
+ * @async
+ * @param {string} cityName - Nome da cidade.
+ * @returns {Promise<void>}
+ */
 async function searchWeather(cityName) {
     try {
         const city = await getCityCoordinates(cityName);
@@ -164,7 +216,12 @@ if (typeof document !== 'undefined') {
 
 // estado inicial
 document.body.classList.add('theme-day');
-// 1) Classe do ícone conforme weathercode + dia/noite
+/**
+ * Mapeia código do tempo + período (dia/noite) para classe do ícone (Weather Icons).
+ * @param {number} code - Código do tempo (Open-Meteo).
+ * @param {0|1} isDay - 1 para dia, 0 para noite.
+ * @returns {string} Classe CSS (ex.: "wi-day-cloudy").
+ */
 function getWeatherIconClass(code, isDay) {
     const day = isDay === 1;
     const map = {
@@ -202,9 +259,14 @@ function formatDateOnly(iso) {
         weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
     });
 }
-// No final do arquivo js/api.js (se removeu os 'export' individuais)
-module.exports = {
-    getCityCoordinates,
-    getWeatherData,
-    searchWeather
-};
+
+if (typeof module !== 'undefined') {
+    module.exports = {
+      getCityCoordinates,
+      getWeatherData,
+      getWeatherDescription,
+      getWeatherIconClass,
+      // opcional: expor showResult p/ teste de DOM
+      __showResult: typeof showResult === 'function' ? showResult : undefined,
+    };
+  }
