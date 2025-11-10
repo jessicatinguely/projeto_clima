@@ -38,7 +38,7 @@ function getWeatherDescription(code) {
 }
 
 // API: geocoding
-async function getCityCoordinates(cityName) {
+ async function getCityCoordinates(cityName) {
     const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityName)}&count=1&language=pt&format=json`;
     const res = await fetch(url);
     if (!res.ok) throw new Error('Falha ao buscar coordenadas.');
@@ -139,22 +139,28 @@ async function searchWeather(cityName) {
     }
 }
 
-// Listeners
-weatherForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const cityName = cityInput.value.trim();
-    if (cityName) searchWeather(cityName);
-});
-
-if (errorForm) {
-    errorForm.addEventListener('submit', (e) => {
+// Listeners — só adiciona se os elementos existirem (evita erro no Jest)
+if (typeof document !== 'undefined') {
+    if (weatherForm) {
+      weatherForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const cityName = cityInput.value.trim();
+        if (cityName) searchWeather(cityName);
+      });
+    }
+  
+    if (errorForm) {
+      errorForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const cityName = cityInputError.value.trim();
         if (cityName) searchWeather(cityName);
-    });
-}
-
-backButton.addEventListener('click', showHome);
+      });
+    }
+  
+    if (backButton) {
+      backButton.addEventListener('click', showHome);
+    }
+  }  
 
 // estado inicial
 document.body.classList.add('theme-day');
@@ -196,3 +202,9 @@ function formatDateOnly(iso) {
         weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
     });
 }
+// No final do arquivo js/api.js (se removeu os 'export' individuais)
+module.exports = {
+    getCityCoordinates,
+    getWeatherData,
+    searchWeather
+};
