@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Previsão do Tempo</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+    <!-- Página Inicial -->
+    <section id="home-section" class="section">
+        <h1 class="page-title"></h1>
+        <div class="card">
+            <h2 class="card-title">Previsão do Tempo</h2>
+            <form id="weather-form">
+                <input 
+                    type="text" 
+                    id="city-input" 
+                    placeholder="Digite o nome da cidade"
+                    required
+                >
+                <button type="submit">Buscar</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Temperatura atual da Cidade -->
+    <section id="result-section" class="section hidden">
+        <h1 class="page-title"></h1>
+        <div class="card result-card">
+            <div class="temperature-box">
+                <span id="temperature" class="temperature">21°</span>
+            </div>
+            <p id="city-name" class="city-name">São Paulo, Brasil</p>
+            <button id="back-button" class="icon-button">🏠</button>
+        </div>
+    </section>
+
+    <!-- Cidade não encontrada -->
+    <section id="error-section" class="section hidden">
+        <h1 class="page-title"></h1>
+        <div class="card">
+            <h2 class="card-title">Previsão do Tempo</h2>
+            <form id="error-form">
+                <input 
+                    type="text" 
+                    id="city-input-error" 
+                    placeholder="Digite o nome da cidade"
+                    required
+                >
+                <button type="submit">Buscar</button>
+            </form>
+            <div class="error-message">
+                Cidade não encontrada. Tente novamente.
+            </div>
+        </div>
+    </section>
+
+    <script src="./assets/js/api.js"></script>
+</body>
+</html>

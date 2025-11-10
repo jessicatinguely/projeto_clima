@@ -1,0 +1,212 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(180deg, #87CEEB 0%, #B0E0E6 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 40px 20px;
+}
+
+.section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.page-title {
+    color: white;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 40px;
+    text-align: left;
+    width: 100%;
+    max-width: 600px;
+}
+
+.card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+}
+
+.card-title {
+    color: #4A90E2;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+form {
+    display: flex;
+    gap: 10px;
+    align-items: stretch;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 15px 20px;
+    border: 1px solid #E0E0E0;
+    border-radius: 10px;
+    font-size: 1rem;
+    background: #F5F5F5;
+    transition: all 0.3s;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #4A90E2;
+    background: white;
+}
+
+input[type="text"]::placeholder {
+    color: #999;
+}
+
+button[type="submit"] {
+    padding: 15px 35px;
+    background: #4A90E2;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+button[type="submit"]:hover {
+    background: #3A7BC8;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
+}
+
+button[type="submit"]:active {
+    transform: translateY(0);
+}
+
+/* Resultado */
+.result-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.temperature-box {
+    background: linear-gradient(135deg, #D4E9F7 0%, #B8D8E8 100%);
+    border-radius: 15px;
+    padding: 40px 80px;
+    margin-bottom: 10px;
+}
+
+.temperature {
+    font-size: 5rem;
+    font-weight: 700;
+    color: #2C3E50;
+}
+
+.city-name {
+    font-size: 1.5rem;
+    color: #4A90E2;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.icon-button {
+    background: #4A90E2;
+    border: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 5px 15px rgba(74, 144, 226, 0.2);
+}
+
+.icon-button:hover {
+    background: #3A7BC8;
+    transform: scale(1.1);
+}
+
+.icon-button:active {
+    transform: scale(0.95);
+}
+
+/* Mensagem de Erro */
+.error-message {
+    background: #FFE5E5;
+    color: #D32F2F;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    border-left: 4px solid #D32F2F;
+    text-align: left;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 1.5rem;
+        margin-bottom: 30px;
+    }
+
+    .card {
+        padding: 30px 20px;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+    }
+
+    form {
+        flex-direction: column;
+    }
+
+    button[type="submit"] {
+        width: 100%;
+    }
+
+    .temperature-box {
+        padding: 30px 50px;
+    }
+
+    .temperature {
+        font-size: 4rem;
+    }
+
+    .city-name {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-title {
+        font-size: 1.3rem;
+    }
+
+    .temperature {
+        font-size: 3rem;
+    }
+
+    .temperature-box {
+        padding: 25px 40px;
+    }
+}
