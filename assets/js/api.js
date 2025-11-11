@@ -182,14 +182,77 @@ function showHome() {
  * @returns {Promise<void>}
  */
 async function searchWeather(cityName) {
-    try {
-        const city = await getCityCoordinates(cityName);
-        const weather = await getWeatherData(city.latitude, city.longitude);
-        showResult(city, weather);
-    } catch (e) {
-        showError();
-    }
+  try {
+    const city = await getCityCoordinates(cityName);
+    const weather = await getWeatherData(city.latitude, city.longitude);
+    showResult(city, weather);
+
+    // Novo trecho para previsão de 5 dias:
+    const daily = await getDailyForecast(city.latitude, city.longitude);
+    showForecast(daily);
+
+  } catch (e) {
+    showError();
+  }
 }
+/**
+ * Busca previsão diária (máx/mín) para 5 dias.
+ * @param {number} lat
+ * @param {number} lon
+ * @returns {Promise<{time:string[], weathercode:number[], temperature_2m_max:number[], temperature_2m_min:number[]}>}
+ */
+async function getDailyForecast(lat, lon){
+  const url =
+    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}` +
+    `&daily=weathercode,temperature_2m_max,temperature_2m_min&forecast_days=5&timezone=auto`;
+  const data = await fetchJson(url, 'Falha ao buscar previsão diária.');
+  if (!data.daily) throw new Error('Previsão diária indisponível');
+  return data.daily;
+}
+
+/** Renderiza os próximos 5 dias (dia/ícone/descrição/máx/mín) */
+function showForecast(daily){
+  const ul = document.getElementById('forecast-list');
+  if (!ul) return;
+  ul.innerHTML = '';
+
+  // usamos ícones "de dia" por padrão (mais legíveis para previsão)
+  const isDay = 1;
+
+  daily.time.forEach((iso, i) => {
+    const dayName = new Date(iso).toLocaleDateString('pt-BR', { weekday: 'long' });
+    const dateStr = new Date(iso).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long' });
+    const code = daily.weathercode?.[i] ?? 2;
+
+    const li = document.createElement('li');
+    li.className = 'forecast-item';
+
+    li.innerHTML = `
+      <div class="f-left">
+        <div class="weekday">${capitalize(dayName)}</div>
+        <div class="date">${dateStr}</div>
+      </div>
+
+      <div class="f-mid">
+        <i class="wi ${getWeatherIconClass(code, isDay)}"></i>
+        <div class="desc">${getWeatherDescription(code)}</div>
+      </div>
+
+      <div class="f-right">
+        <div class="temp max">${Math.round(daily.temperature_2m_max[i])}°</div>
+        <div class="temp min">${Math.round(daily.temperature_2m_min[i])}°</div>
+      </div>
+    `;
+    ul.appendChild(li);
+  });
+
+  document.getElementById('forecast-section')?.classList.remove('hidden');
+}
+
+function capitalize(s){
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
 
 // Listeners — só adiciona se os elementos existirem (evita erro no Jest)
 if (typeof document !== 'undefined') {
@@ -258,15 +321,17 @@ function formatDateOnly(iso) {
     return d.toLocaleDateString('pt-BR', {
         weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
     });
-}
 
+}
 if (typeof module !== 'undefined') {
     module.exports = {
       getCityCoordinates,
       getWeatherData,
       getWeatherDescription,
       getWeatherIconClass,
+      getDailyForecast,
       // opcional: expor showResult p/ teste de DOM
       __showResult: typeof showResult === 'function' ? showResult : undefined,
+      __showForecast: typeof showForecast === 'function' ? showForecast : undefined,
     };
   }

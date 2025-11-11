@@ -116,10 +116,14 @@ button[type="submit"]:active {
     margin-bottom: 10px;
 
     /* novos ajustes */
-    display: flex;                /* coloca ícone e número lado a lado */
-    align-items: center;          /* centraliza verticalmente */
-    justify-content: center;      /* centraliza horizontalmente */
-    gap: 24px;                    /* espaço entre ícone e temperatura */
+    display: flex;
+    /* coloca ícone e número lado a lado */
+    align-items: center;
+    /* centraliza verticalmente */
+    justify-content: center;
+    /* centraliza horizontalmente */
+    gap: 24px;
+    /* espaço entre ícone e temperatura */
 }
 
 .temperature {
@@ -141,30 +145,32 @@ button[type="submit"]:active {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    display: flex;                /* centraliza o SVG */
+    display: flex;
+    /* centraliza o SVG */
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: all 0.3s;
     box-shadow: 0 5px 15px rgba(74, 144, 226, 0.2);
-  }
-  
-  .icon-button:hover {
+}
+
+.icon-button:hover {
     background: #3A7BC8;
     transform: scale(1.1);
-  }
-  
-  .icon-button:active {
+}
+
+.icon-button:active {
     transform: scale(0.95);
-  }
-  
-  .icon-button svg {
+}
+
+.icon-button svg {
     width: 28px;
     height: 28px;
-    stroke: white;               /* cor do contorno */
+    stroke: white;
+    /* cor do contorno */
     stroke-width: 2;
     transition: transform 0.3s ease;
-  }
+}
 
 /* Mensagem de Erro */
 .error-message {
@@ -225,7 +231,8 @@ button[type="submit"]:active {
     .temperature-box {
         padding: 25px 40px;
     }
-} 
+}
+
 /* Ícones do clima */
 
 #weather-icon {
@@ -235,32 +242,135 @@ button[type="submit"]:active {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  
-  #weather-icon.wi::before {
+}
+
+#weather-icon.wi::before {
     font-size: 4.8rem !important;
     line-height: 1;
     display: inline-block;
-    transform: translateY(4px); /* ajuste fino — sobe ou desce o ícone */
-  }
-  
-  /* Fundo dia/noite */
-  body.theme-day {
+    transform: translateY(4px);
+    /* ajuste fino — sobe ou desce o ícone */
+}
+
+/* Fundo dia/noite */
+body.theme-day {
     background: linear-gradient(180deg, #87CEEB 0%, #B0E0E6 100%);
-  }
-  
-  body.theme-night {
+}
+
+body.theme-night {
     background: linear-gradient(180deg, #0f1b33 0%, #1a2340 100%);
-  }
-  
-  /* Descrição e data */
-  .weather-description {
+}
+
+/* Descrição e data */
+.weather-description {
     font-size: 1rem;
     color: #2C3E50;
     margin-top: -6px;
-  }
-  
-  .update-time {
+}
+
+.update-time {
     font-size: 0.9rem;
     color: #6b7c93;
+}
+/* ====== Forecast (lista dos próximos dias) ====== */
+.forecast-title{
+    margin: 6px 0 8px;
+    font-size: 1.05rem;
+    color: #2C3E50;
+    font-weight: 700;
+    text-align: center;
+  }
+  
+  .forecast-list{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  /* card de cada dia */
+  .forecast-item{
+    display: grid;
+    grid-template-columns: 1fr auto auto; /* esquerda | ícone/descrição | temperaturas */
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    border-radius: 14px;
+    background: #F7FAFD;
+    box-shadow: 0 4px 16px rgba(0,0,0,.06);
+  }
+  
+  /* coluna esquerda (dia + data) */
+  .f-left .weekday{
+    font-weight: 700;
+    color: #3E6EA8;
+    font-size: .95rem;
+    line-height: 1.1;
+  }
+  .f-left .date{
+    margin-top: 2px;
+    font-size: .8rem;
+    color: #8BA0B3;
+  }
+  
+  /* coluna do meio (ícone + descrição) */
+  .f-mid{
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 10px;
+    min-width: 140px;
+  }
+  .f-mid i.wi{
+    font-size: 2rem;
+    color: #4A90E2;
+    line-height: 1;
+  }
+  .f-mid .desc{
+    font-size: .85rem;
+    color: #6A7B8D;
+    line-height: 1.15;
+  }
+  
+  /* coluna direita (máx/mín) */
+  .f-right{
+    display: grid;
+    gap: 4px;
+    text-align: right;
+    min-width: 60px;
+  }
+  .f-right .temp{
+    font-weight: 700;
+    color: #2C3E50;
+    font-size: .95rem;
+  }
+  
+  /* setinhas e cores para max/min */
+  .f-right .max::before{
+    content: "▲";
+    margin-right: 6px;
+    font-size: .75rem;
+    color: #D55;
+  }
+  .f-right .min::before{
+    content: "▼";
+    margin-right: 6px;
+    font-size: .75rem;
+    color: #3A7BC8;
+  }
+  
+  /* responsivo */
+  @media (max-width: 480px){
+    .forecast-item{
+      grid-template-columns: 1fr auto;
+      grid-template-areas:
+        "left right"
+        "mid  right";
+      row-gap: 6px;
+    }
+    .f-left{ grid-area: left; }
+    .f-mid{ grid-area: mid; }
+    .f-right{ grid-area: right; }
   }  
