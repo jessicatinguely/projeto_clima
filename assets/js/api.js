@@ -11,6 +11,8 @@ const backButton = document.getElementById('back-button');
 
 const temperatureElement = document.getElementById('temperature');
 const cityNameElement = document.getElementById('city-name');
+const forecastSection = document.getElementById('forecast-section');
+const forecastList    = document.getElementById('forecast-list');
 
 // (Opcional, mas recomendado) Função que centraliza o fetch + validação
 async function fetchJson(url, failMsg) {
@@ -114,6 +116,8 @@ function showResult(cityData, weatherData) {
     const { name, country } = cityData;
     const { current_weather } = weatherData;
 
+    ensureMinElements(); // garante slash e min no DOM (mesmo antes de carregar a daily)
+
     // valores principais
     temperatureElement.textContent = `${Math.round(current_weather.temperature)}°`;
     cityNameElement.textContent = `${name}, ${country}`;
@@ -155,24 +159,37 @@ function showResult(cityData, weatherData) {
 
 /** Mostra tela de erro e volta tema para "dia". */
 function showError() {
-    homeSection.classList.add('hidden');
-    resultSection.classList.add('hidden');
-    errorSection.classList.remove('hidden');
+  homeSection.classList.add('hidden');
+  resultSection.classList.add('hidden');
+  errorSection.classList.remove('hidden');
 
-    document.body.classList.remove('theme-night');
-    document.body.classList.add('theme-day');
+  // 🔹 esconde e limpa a previsão
+  if (forecastSection) forecastSection.classList.add('hidden');
+  if (forecastList) forecastList.innerHTML = '';
+
+  document.body.classList.remove('theme-night');
+  document.body.classList.add('theme-day');
 }
 
 /** Volta para a tela inicial e limpa os campos. */
 function showHome() {
-    resultSection.classList.add('hidden');
-    errorSection.classList.add('hidden');
-    homeSection.classList.remove('hidden');
-    cityInput.value = '';
-    if (cityInputError) cityInputError.value = '';
+  resultSection.classList.add('hidden');
+  errorSection.classList.add('hidden');
+  homeSection.classList.remove('hidden');
 
-    document.body.classList.remove('theme-night');
-    document.body.classList.add('theme-day');
+  // limpa campos
+  if (cityInput) cityInput.value = '';
+  if (cityInputError) cityInputError.value = '';
+
+  // 🔹 esconde e limpa a previsão de 5 dias
+  if (forecastSection) forecastSection.classList.add('hidden');
+  if (forecastList) forecastList.innerHTML = '';
+
+  const min = document.getElementById('temperature-min');
+  if (min) min.textContent = '';
+
+  document.body.classList.remove('theme-night');
+  document.body.classList.add('theme-day');
 }
 
 /**
@@ -189,7 +206,8 @@ async function searchWeather(cityName) {
 
     // Novo trecho para previsão de 5 dias:
     const daily = await getDailyForecast(city.latitude, city.longitude);
-    showForecast(daily);
+    updateTodayMin(daily);
+    showForecast(daily);  
 
   } catch (e) {
     showError();
@@ -247,6 +265,41 @@ function showForecast(daily){
   });
 
   document.getElementById('forecast-section')?.classList.remove('hidden');
+}
+
+function ensureMinElements() {
+  let slash = document.getElementById('temperature-slash');
+  if (!slash) {
+    slash = document.createElement('span');
+    slash.id = 'temperature-slash';
+    slash.className = 'temperature-slash';
+    slash.textContent = '/';
+    document.querySelector('.temperature-box')?.appendChild(slash);
+  }
+
+  let min = document.getElementById('temperature-min');
+  if (!min) {
+    min = document.createElement('span');
+    min.id = 'temperature-min';
+    min.className = 'temperature-min';
+    document.querySelector('.temperature-box')?.appendChild(min);
+  }
+  return { slash, min };
+}
+function updateTodayMin(daily){
+  const { min } = ensureMinElements();
+  if (!daily || !daily.time?.length) {
+    if (min) min.textContent = '';
+    return;
+  }
+
+  // procura o índice do dia “de hoje” no array daily.time
+  const todayISO = new Date().toISOString().slice(0,10); // yyyy-mm-dd
+  let idx = daily.time.indexOf(todayISO);
+  if (idx === -1) idx = 0; // fallback no primeiro dia retornado
+
+  const tmin = Math.round(daily.temperature_2m_min?.[idx] ?? NaN);
+  min.textContent = Number.isFinite(tmin) ? `${tmin}°` : '';
 }
 
 function capitalize(s){

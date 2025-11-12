@@ -109,28 +109,29 @@ button[type="submit"]:active {
     gap: 20px;
 }
 
-.temperature-box {
-    background: linear-gradient(135deg, #D4E9F7 0%, #B8D8E8 100%);
-    border-radius: 15px;
-    padding: 40px 80px;
-    margin-bottom: 10px;
-
-    /* novos ajustes */
-    display: flex;
-    /* coloca ícone e número lado a lado */
-    align-items: center;
-    /* centraliza verticalmente */
-    justify-content: center;
-    /* centraliza horizontalmente */
-    gap: 24px;
-    /* espaço entre ícone e temperatura */
-}
-
-.temperature {
-    font-size: 5rem;
-    font-weight: 700;
-    color: #2C3E50;
-}
+.temperature-box{
+    display:flex; align-items:center; gap:16px;
+    background: linear-gradient(135deg, #d9e9f4 0%, #cfe0ea 100%);
+    border-radius:24px; padding:28px 32px;
+  }
+  
+  .temperature-box .wi{
+    font-size: 64px; /* ícone maior e elegante */
+    line-height: 1;
+  }
+  
+  .temperature{
+    font-size: 120px; font-weight: 800; line-height: 1; color:#2f3a46;
+  }
+  
+  .temperature-slash{
+    font-size: 60px; line-height:1; color:#2f3a46; opacity:.35;
+    margin: 0 6px;
+  }
+  
+  .temperature-min{
+    font-size: 48px; font-weight: 700; line-height: 1; color:#2f3a46; opacity:.75;
+  }
 
 .city-name {
     font-size: 1.5rem;
@@ -219,20 +220,25 @@ button[type="submit"]:active {
     }
 }
 
-@media (max-width: 480px) {
-    .page-title {
-        font-size: 1.3rem;
+@media (max-width: 480px){
+    .forecast-item{
+      grid-template-columns: 1fr auto;
+      grid-template-areas:
+        "left right"
+        "mid  right";
+      row-gap: 6px;
     }
-
-    .temperature {
-        font-size: 3rem;
-    }
-
-    .temperature-box {
-        padding: 25px 40px;
-    }
-}
-
+    .f-left{ grid-area: left; }
+    .f-mid{ grid-area: mid; }
+    .f-right{ grid-area: right; }
+  }  
+  
+  @media (max-width: 600px){
+    .temperature{ font-size: 80px; }
+    .temperature-min{ font-size: 36px; }
+    .temperature-box .wi{ font-size: 48px; }
+    .temperature-slash{ font-size: 40px; }
+  }
 /* Ícones do clima */
 
 #weather-icon {
@@ -361,16 +367,3 @@ body.theme-night {
     color: #3A7BC8;
   }
   
-  /* responsivo */
-  @media (max-width: 480px){
-    .forecast-item{
-      grid-template-columns: 1fr auto;
-      grid-template-areas:
-        "left right"
-        "mid  right";
-      row-gap: 6px;
-    }
-    .f-left{ grid-area: left; }
-    .f-mid{ grid-area: mid; }
-    .f-right{ grid-area: right; }
-  }  
