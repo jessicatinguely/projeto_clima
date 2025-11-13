@@ -1,127 +1,132 @@
-# 🌦️ Projeto Clima — Aplicativo de Previsão do Tempo
-
-<br />
+# 🌦️ Aplicativo de Previsão do Tempo
 
 <div align="center">
 
-<img src="https://img.shields.io/github/languages/top/jessicatinguely/projeto_clima?style=flat-square&cacheSeconds=60&v=1" />
-<img src="https://img.shields.io/github/languages/count/jessicatinguely/projeto_clima?style=flat-square&cacheSeconds=60&v=1" />
-<img src="https://img.shields.io/github/repo-size/jessicatinguely/projeto_clima?style=flat-square&cacheSeconds=60&v=1" />
-<img src="https://img.shields.io/github/last-commit/jessicatinguely/projeto_clima/main?style=flat-square&cacheSeconds=60&v=1" />
-<img src="https://img.shields.io/github/issues-raw/jessicatinguely/projeto_clima?style=flat-square&cacheSeconds=60&v=1" />
-<img src="https://img.shields.io/github/issues-pr-raw/jessicatinguely/projeto_clima?style=flat-square&cacheSeconds=60&v=1" />
-<img src="https://img.shields.io/badge/status-em%20constru%C3%A7%C3%A3o-yellow?style=flat-square" />
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" width="80" alt="HTML5" />
+<img src="https://i.imgur.com/EkuU4uI.png" width="80" alt="CSS3" />
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" width="80" alt="JavaScript" />
 
 </div>
 
-<br />
+---
+
+<p align="center">
+  <img src="https://img.shields.io/badge/repo%20size-77%20KiB-blue?style=flat-square" />
+  <img src="https://img.shields.io/badge/HTML-5-orange?style=flat-square" />
+  <img src="https://img.shields.io/badge/CSS-3-purple?style=flat-square" />
+  <img src="https://img.shields.io/badge/JavaScript-ES6%2B-yellow?style=flat-square" />
+  <img src="https://img.shields.io/badge/last%20commit-november-gold?style=flat-square" />
+  <img src="https://img.shields.io/badge/issues-0%20open-brightgreen?style=flat-square" />
+  <img src="https://img.shields.io/badge/pull%20requests-0%20open-green?style=flat-square" />
+  <img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square" />
+</p>
+
+---
 
 ## 🧭 1. Descrição
 
-O **Projeto Clima** é um aplicativo educacional de **previsão do tempo**, desenvolvido em **JavaScript puro**, que consome a API pública **Open-Meteo** para exibir informações meteorológicas em tempo real.
+Aplicação web desenvolvida com **HTML**, **CSS** e **JavaScript**, que consome a API pública [Open-Meteo](https://open-meteo.com/) para exibir a **temperatura atual** e a **previsão dos próximos 5 dias** de qualquer cidade pesquisada.
 
-A aplicação foi criada com fins didáticos, integrando conceitos de:
-- Consumo de APIs REST
-- Manipulação do DOM
-- Tratamento de erros e validação
-- Testes automatizados com **Jest**
-- Boas práticas de documentação com **JSDoc**
+O projeto foi evoluindo ao longo das etapas com foco em **funcionalidades, usabilidade, segurança e ética no uso de dados**, aplicando também **IA para refatoração e boas práticas de código.**
 
 ---
 
-## ⚙️ 2. Funcionalidades Principais
+## 🚀 2. Funcionalidades
 
-1. Busca de cidade e exibição de temperatura atual  
-2. Exibição de condições meteorológicas e ícones visuais (Weather Icons)  
-3. Alteração de tema (dia/noite) conforme o horário da consulta  
-4. Tratamento de erros (cidade inválida, falha de rede, etc.)  
-5. Testes automatizados de API e interface (Jest + jsdom)
+- Busca de cidades e exibição da previsão do tempo em tempo real.  
+- Mostra temperatura **atual, mínima e máxima**, condição climática e ícone correspondente.  
+- Exibe previsão **para os próximos 5 dias**, com descrição e variação de temperatura.  
+- **Interface moderna e responsiva**, com tema claro/agradável.  
+- Exibição de **alertas de privacidade e licenciamento** no rodapé.  
+- Boas práticas de segurança aplicadas (uso de API pública sem armazenamento local).  
 
 ---
 
-## 🧪 3. Testes Automatizados
+## 🧠 3. Uso de Inteligência Artificial
 
-Os testes foram desenvolvidos com o **Jest**, abrangendo:
-- Funções puras (`getCityCoordinates`, `getWeatherData`, `getWeatherIconClass`)  
-- Tratamento de exceções  
-- Simulação de rede (`fetch mock`)  
-- Interação com DOM via **jsdom**
+Durante o desenvolvimento, a IA foi utilizada para:
+- Sugerir a **integração da previsão de 5 dias** e o formato visual dos ícones.  
+- Otimizar o código com **funções reutilizáveis e mais legíveis.**  
+- Implementar práticas de **segurança e privacidade**, incluindo mensagens de transparência.  
 
-**Comando para executar:**
+Essas melhorias deixaram o projeto mais eficiente, claro e intuitivo para o usuário.
+
+---
+
+## 🧩 4. Tecnologias Utilizadas
+
+- **HTML5**
+- **CSS3**
+- **JavaScript (ES6+)**
+- **Open-Meteo API**
+- **Weather Icons**
+- **Google Fonts**
+- **Jest**
+
+---
+
+## ⚙️ 5. Como Executar
+
 ```bash
-npm test
+git clone https://github.com/seuusuario/projeto_clima.git
+cd projeto_clima
 ```
 
-**Cobertura atual:**
-```
-Statements   : 63%
-Branches     : 65%
-Functions    : 61%
-Lines        : 64%
-```
+Abra o arquivo **index.html** em seu navegador.
 
 ---
 
-## 🧾 4. Estrutura do Projeto
+## 🔒 6. Segurança e Privacidade
+
+- Não coleta ou armazena dados pessoais.  
+- Requisições feitas via **HTTPS** diretamente para Open-Meteo.  
+- Sem uso de localStorage, cookies ou backend.  
+
+---
+
+## ⚖️ 7. Licenciamento e Conformidade
+
+- Dados ▸ **Open‑Meteo (CC BY 4.0)**  
+- Ícones ▸ **Weather Icons (SIL OFL 1.1)**  
+- Fonte ▸ **Google Fonts — Apache 2.0**  
+- Projeto ▸ **MIT License**
+
+---
+
+## 🧰 8. Estrutura
 
 ```
 projeto_clima/
-│
 ├── assets/
 │   ├── css/
 │   ├── js/
-│   │   └── api.js          # Funções principais e integração com DOM
-│
-├── tests/
-│   ├── api.test.js         # Testes de API e edge cases
-│   └── ui.test.js          # Testes de interface (jsdom)
-│
-├── package.json
+│   └── icons/
+├── index.html
 ├── README.md
-└── index.html
+├── LICENSE
+└── NOTICE.md
 ```
 
 ---
 
-## 🧠 5. Tecnologias Utilizadas
+## 🧪 9. Testes
 
-| Categoria | Tecnologia |
-|------------|-------------|
-| Linguagem | JavaScript (ES6+) |
-| Ambiente | Node.js |
-| Testes | Jest + jsdom |
-| API Pública | Open-Meteo |
-| Ícones | Weather Icons |
-| Documentação | JSDoc |
-
----
-
-## 🚀 6. Como Executar o Projeto
-
-1. Clone o repositório:
-```bash
-git clone https://github.com/jessicatinguely/projeto_clima.git
-```
-
-2. Instale as dependências:
-```bash
-npm install
-```
-
-3. Abra o arquivo `index.html` no navegador.
-
-4. Para executar os testes:
 ```bash
 npm test
 ```
 
 ---
 
-## ✨ 7. Status do Projeto
-🟡 **Em construção** — melhorias contínuas nas funções, testes e interface.
+## 👩‍💻 10. Desenvolvedora
+
+**Jéssica Ghirardelli Tinguely**  
+🔗 GitHub: https://github.com/jessicatinguely  
+🔗 LinkedIn: https://linkedin.com/in/jessicatinguely
 
 ---
 
-## 💡 8. Desenvolvido por
-**Jessica Ghirardelli Tinguely**  
-📍 [GitHub](https://github.com/jessicatinguely)
+## 🪪 11. Licença
+
+MIT License.
+
+---
